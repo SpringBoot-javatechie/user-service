@@ -3,6 +3,7 @@ package com.javatechie.controller;
 import com.javatechie.entity.User;
 import com.javatechie.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,6 +13,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Value("${server.port}")
+    private int port;
+
+
     @PostMapping
     public User registerNewUser(@RequestBody User user) {
         return userService.addNewUser(user);
@@ -19,6 +24,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public User getUser(@PathVariable int userId) {
+        System.out.println("request is landed on port : " + port);
         return userService.getUser(userId);
     }
 
